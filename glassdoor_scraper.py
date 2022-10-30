@@ -43,6 +43,7 @@ def get_jobs(keyword, num_jobs, verbose, sleep_time):
         except NoSuchElementException:
             pass
         
+        
         #Going through each job in this page
         job_buttons = driver.find_elements(By.CLASS_NAME, 'react-job-listing')
         print(len(job_buttons))
@@ -51,6 +52,9 @@ def get_jobs(keyword, num_jobs, verbose, sleep_time):
             if len(jobs) >= num_jobs:
                 break
 
+
+            print(driver.find_element(By.XPATH, '(//div[@data-test="employerName"//div//div//div//span)[2]').text)
+                    
             job_button.click()  
             time.sleep(1)
             collected_successfully = False
@@ -93,12 +97,12 @@ def get_jobs(keyword, num_jobs, verbose, sleep_time):
                 size = -1
 
             try:
-                founded = driver.find_element(By.CSS_SELECTOR, 'div.css-rmzuhb > span.css-19gxme').text
+                founded = driver.find_element(By.CSS_SELECTOR, 'span.e1pvx6aw1').text
             except NoSuchElementException:
                 founded = -1
 
             try:
-                type_of_ownership = driver.find_element(By.XPATH, './/div[@class="infoEntity"]//label[text()="Type"]//following-sibling::*').text
+                type_of_ownership = driver.find_element(By.CSS_SELECTOR, 'span.e1pvx6aw2').text
             except NoSuchElementException:
                 type_of_ownership = -1
 
