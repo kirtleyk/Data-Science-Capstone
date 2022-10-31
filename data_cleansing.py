@@ -42,23 +42,40 @@ print("NULL in Numeric Columns", df[num_cols].isnull().sum())
 print("NULL in ojbect Columns", df[cat_cols].isnull().sum())
 
 
-#Find outliers
+#Find outliers in salary
 print(df.describe()[['Salary','Rating']])
 
 plt.figure(figsize=(5, 4))
 plt.suptitle('Salary Boxplot - Outliers')
 plt.boxplot(df['Salary'])
 
-#fig.subplots_adjust(top=0.8)
-# Creating axes instance
-# ax = fig.add_axes([0, 0, 1, 1])
+#Salary outlier found with value of 90,000,000 Rupees
+#Remove outlier 
+df2 = df[df.Salary == 90000000].index
+print("Dropping...", df2)
+df = df.drop(df2)
 
-# Creating plot
-# bp = ax.boxplot(df['Salary'])
+plt.figure(figsize=(5, 4))
+plt.suptitle('Salary Boxplot - Removed Outlier')
+plt.boxplot(df['Salary'])
 
-# show plot
-plt.show()
+plt.figure(figsize=(5, 4))
+plt.suptitle('Rating Boxplot - Outliers')
+plt.boxplot(df['Rating'])
 
+#Add US Salary to dataset based on Salary for Rupee
+# Conversion rate is .012
+rcr = 0.012
+df = df.assign(USSalary=lambda x: (x['Salary']*rcr))
+
+print(df['USSalary'].describe())
+
+plt.figure(figsize=(5, 4))
+plt.suptitle('US Salary Boxplot - Removed Outlier')
+plt.boxplot(df['USSalary'])
+
+
+# print(df[""])
 
 # find missing data - yellow is missing. blue is not missing.
 # plt.figure(figsize=(10,4))
