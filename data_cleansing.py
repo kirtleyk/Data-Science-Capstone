@@ -84,6 +84,8 @@ num_cols = df.columns[df.dtypes != 'object']
 cat_cols = df.columns[df.dtypes == 'object']
 
 
+
+
 df.describe(include='all')
 
 df.isnull().sum()
@@ -160,4 +162,5 @@ df.plot(kind='scatter', x='Location', y='USSalary')
 # for x in LowSalary:
 #     print(LowSalary['Salary'], LowSalary['Location'])
 
-
+# Save the dataset to a pickle file
+df.to_pickle("cleaned_salary_dataset.pkl")
