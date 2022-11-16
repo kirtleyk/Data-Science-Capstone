@@ -23,29 +23,29 @@ df = pd.read_csv('Salary_Dataset.csv')
 # print(df.head())
 print(df.dtypes)
 # evaluate and drop unneeded features
-# df = df.drop(columns=(['Salaries Reported', 'Job Title', 'Company Name', ]))
+df = df.drop(columns=(['Salaries Reported', 'Job Title', 'Company Name', ]))
 
 # shape and data types of the data
 # print("Shape", df.shape)
-#print(df.dtypes)
+print(df.dtypes)
 # print("Value Counts", df.dtypes.value_counts())
-# print(df.describe())
+print(df.describe())
 
 #separate numeric from object columns
 
-# num_cols = df.columns[df.dtypes != 'object']
-# cat_cols = df.columns[df.dtypes == 'object']
+num_cols = df.columns[df.dtypes != 'object']
+cat_cols = df.columns[df.dtypes == 'object']
 
-#print("numeric:", num_cols, "non-numeric:", cat_cols)
+print("numeric:", num_cols, "non-numeric:", cat_cols)
 
 #Find missing values in numeric columns
-#print("NULL in Numeric Columns", df[num_cols].isnull().sum())
+print("NULL in Numeric Columns", df[num_cols].isnull().sum())
 # Find missing values in object columns
-#print("NULL in ojbect Columns", df[cat_cols].isnull().sum())
+print("NULL in ojbect Columns", df[cat_cols].isnull().sum())
 
 
 #Find outliers in salary
-#print(df.describe()[['Salary','Rating']])
+print(df.describe()[['Salary','Rating']])
 
 plt.figure(figsize=(5, 4))
 plt.suptitle('Salary Boxplot - Outliers')
@@ -62,9 +62,9 @@ plt.suptitle('Salary Boxplot - Removed Outlier')
 plt.boxplot(df['Salary'])
 
 # Rating outliers
-# plt.figure(figsize=(5, 4))
-# plt.suptitle('Rating Boxplot - Outliers')
-# plt.boxplot(df['Rating'])
+plt.figure(figsize=(5, 4))
+plt.suptitle('Rating Boxplot - Outliers')
+plt.boxplot(df['Rating'])
 
 # Add US Salary to dataset based on Salary for Rupee
 # Conversion rate is .012
@@ -83,9 +83,6 @@ print("Post Cleansing", df.shape)
 num_cols = df.columns[df.dtypes != 'object']
 cat_cols = df.columns[df.dtypes == 'object']
 
-
-
-
 df.describe(include='all')
 
 df.isnull().sum()
@@ -103,23 +100,20 @@ plt2.hist(df["Location"])
 plt2.suptitle('Location Distribution')
 plt2.savefig("./img/location_distribution.png", dpi=100)
 
-
-#print(df["Location"].unique())
-
 # Job Role Distribution
 plt2.figure(figsize=(10, 5))
 plt2.hist(df["Job Roles"])
 plt2.suptitle('Job Role Distribution')
 plt2.savefig("./img/job_role_distribution.png", dpi=100)
 
-#print(df["Job Roles"].unique())
-print(df["Employment Status"].unique())
+
+print("Unique Job Roles:", df["Employment Status"].unique())
 
 sns.displot(df['USSalary'])
 sns.displot(df['Rating'])
 
 
-# sns.relplot(x='Location', y='USSalary', hue='Location', data=df)
+sns.relplot(x='Location', y='USSalary', hue='Location', data=df)
 
 
 # calculate correlation matrix
@@ -135,32 +129,8 @@ df.plot(kind='scatter', x='Location', y='Job Roles')
 # Job roles are not evenly distributed in each locatoin. Several locations only use one job role.
 df.plot(kind='scatter', x='Location', y='USSalary')
 
+# Drop salary as USSalary was calculated from it and it is no longer needed. 
+df = df.drop(columns=('Salary'))
 
-
-# plt3.figure(figsize=(15,4))
-# plt3.bar(df["Location"], df["Salary"], log=True)
-
-
-# plt4.figure(figsize=(15,4))
-# plt4.bar(df["Location"], df["Salary"], log=False)
-# plt4.suptitle('Salary by Location')
-
-#fig, ax1 = plt3.subplots()
-
-#x = df['Salary']
-#y1 = df['Location']
-#y2 = df['Ctrv']
-
-#ax2 = ax1.twinx()
-
-#ax1.plot(x, y1, 'g-')
-#ax2.plot(x, y2, 'b-')
-#plt3.bar(x, 10)
-
-# LowSalary = df[['Salary','Location']].query("Salary < 80000") 
-
-# for x in LowSalary:
-#     print(LowSalary['Salary'], LowSalary['Location'])
-
-# Save the dataset to a pickle file
+# Save the cleaned dataset to a pickle file
 df.to_pickle("cleaned_salary_dataset.pkl")
