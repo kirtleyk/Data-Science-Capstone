@@ -18,12 +18,6 @@ def _distplot(columns):
         
 # Read in pickle file into data frame
 df = pd.read_pickle("cleaned_salary_dataset.pkl")
-_distplot(['USSalary'])
-outliers = df.quantile(.97)
-print(outliers)
-
-df = df[(df['USSalary'] < outliers['USSalary'])]
-_distplot(['USSalary'])
 
 # Use one hot encoding to convert unique values to columns for model
 dummy = pd.get_dummies(df.Location)
@@ -43,11 +37,13 @@ train_set, test_set = train_test_split(merged, test_size=.2, random_state=123)
 
 print('Train size: ', len(train_set), 'Test size: ', len(test_set))
 
+# Defined the independent column values to use in the training set 
 X = train_set[['Bangalore', 'Chennai', 'Hyderabad', 'Jaipur', 'Kerala', 'Kolkata',
                'Madhya Pradesh', 'Mumbai', 'New Delhi', 'Pune', 'Android', 'Backend',
                'Database', 'Frontend', 'IOS', 'Java', 'Mobile', 'Python', 'SDE',
                'Testing', 'Web', 'Contractor', 'Full Time', 'Intern', 'Trainee', 'Rating']]
 
+# Define dependent/target column
 y = train_set['USSalary']
 
 X_test = test_set[['Bangalore', 'Chennai', 'Hyderabad', 'Jaipur', 'Kerala', 'Kolkata',
@@ -59,8 +55,10 @@ y_test = test_set['USSalary']
 ####################### Excecute Models and get Results #################################
 print()
 print('****** Training Set Evaluation Scores ******')
-print(regr(X,y))
-print()
-print('****** Test Set Evaluation Scores ******')
-print(regr(X_test, y_test))
+train, test = regr(X,y,X_test,y_test)
 
+print(train)
+print()
+
+print('****** Test Set Evaluation Scores ******')
+print(test)
