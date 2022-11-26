@@ -3,7 +3,6 @@ import warnings
 import numpy as np
 import pandas as pd
 warnings.filterwarnings('ignore')
-from sklearn.decomposition import PCA
 from sklearn.ensemble import (GradientBoostingRegressor)
 #Regression
 from sklearn.linear_model import ElasticNet, Lasso, LinearRegression, Ridge
@@ -31,9 +30,7 @@ def regr(x,y, x_test, y_test):
        
     algos=[lr,r,l,e,kn,et,gb,dt]
     algos_names=['LinearRegressor','Ridge','Lasso','ElasticNet','KNeighbors','ExtraTree','GradientBoosting','DecisionTree']
-    
-    # x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=.2,random_state=42)
-    
+       
     r_score=[]
     mse=[]
     mae=[]
