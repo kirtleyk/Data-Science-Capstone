@@ -68,4 +68,4 @@ def regr(x,y, x_test, y_test):
     result_test['MAE Test'] = mae_test
     result_test['RMSE Test'] = rmse_test
     
-    return (result.sort_values('R2',ascending=False), result_test.sort_values('R2 Test',ascending=False))
+    return (result, result_test)

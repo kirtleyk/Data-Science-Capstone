@@ -56,3 +56,5 @@ print()
 
 print('****** Test Set Evaluation Scores ******')
 print(test)
+
+sns.barplot(data=train)
